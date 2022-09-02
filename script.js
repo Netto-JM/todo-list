@@ -24,9 +24,15 @@ function completeElementBuilder(element, text, parent, idName) {
   return newElement;
 }
 
+function selectItem(event) {
+  const clickedItem = event.target;
+  clickedItem.classList.add('selected');
+}
+
 function addItem() {
   const taskText = taskInput.value;
-  completeElementBuilder('li', taskText, taskList);
+  const taskItem = completeElementBuilder('li', taskText, taskList, 'task-item');
+  taskItem.addEventListener('click', selectItem);
   taskInput.value = '';
 }
 
