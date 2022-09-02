@@ -1,6 +1,9 @@
 const clearCompletedButton = document.getElementById('remover-finalizados');
+const removeButton = document.getElementById('remover-selecionado');
 const clearAllButton = document.getElementById('apaga-tudo');
 const saveButton = document.getElementById('salvar-tarefas');
+const moveDownButton = document.getElementById('mover-baixo');
+const moveUpButton = document.getElementById('mover-cima');
 const addButton = document.getElementById('criar-tarefa');
 const taskInput = document.getElementById('texto-tarefa');
 const taskList = document.getElementById('lista-tarefas');
@@ -95,8 +98,35 @@ function getList(event) {
   }
 }
 
+function moveTaskUp() {
+  const selectedTask = document.querySelector('.selected');
+  const isNothingSelected = !selectedTask;
+  if (isNothingSelected) return alert('Select a task first');
+  const previousTask = selectedTask.previousElementSibling;
+  const isTopTask = !previousTask;
+  if (isTopTask) return alert('Task is already at the top');
+  taskList.insertBefore(selectedTask, previousTask);
+}
+
+function moveTaskDown() {
+  const selectedTask = document.querySelector('.selected');
+  const isNothingSelected = !selectedTask;
+  if (isNothingSelected) return alert('Select a task first');
+  const nextTask = selectedTask.nextElementSibling;
+  const isBottomTask = !nextTask;
+  if (isBottomTask) return alert('Task is already at the bottom');
+  taskList.insertBefore(nextTask, selectedTask);
+}
+
+function removeSelectedTask() {
+  // code to remove goes here
+}
+
 addButton.addEventListener('click', (event) => addItem(taskInput.value, event));
 clearAllButton.addEventListener('click', clearList);
 clearCompletedButton.addEventListener('click', clearCompleted);
 saveButton.addEventListener('click', saveList);
+moveUpButton.addEventListener('click', moveTaskUp);
+moveDownButton.addEventListener('click', moveTaskDown);
+removeButton.addEventListener('click', removeSelectedTask);
 window.addEventListener('load', getList);
