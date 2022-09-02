@@ -98,10 +98,14 @@ function getList(event) {
   }
 }
 
+function isNothingSelected(selectedTask) {
+  const noSelectionMade = !selectedTask;
+  if (noSelectionMade) return alert('Select a task first');
+}
+
 function moveTaskUp() {
   const selectedTask = document.querySelector('.selected');
-  const isNothingSelected = !selectedTask;
-  if (isNothingSelected) return alert('Select a task first');
+  if (isNothingSelected(selectedTask)) return undefined;
   const previousTask = selectedTask.previousElementSibling;
   const isTopTask = !previousTask;
   if (isTopTask) return alert('Task is already at the top');
@@ -110,8 +114,7 @@ function moveTaskUp() {
 
 function moveTaskDown() {
   const selectedTask = document.querySelector('.selected');
-  const isNothingSelected = !selectedTask;
-  if (isNothingSelected) return alert('Select a task first');
+  if (isNothingSelected(selectedTask)) return undefined;
   const nextTask = selectedTask.nextElementSibling;
   const isBottomTask = !nextTask;
   if (isBottomTask) return alert('Task is already at the bottom');
@@ -119,7 +122,9 @@ function moveTaskDown() {
 }
 
 function removeSelectedTask() {
-  // code to remove goes here
+  const selectedTask = document.querySelector('.selected');
+  if (isNothingSelected(selectedTask)) return undefined;
+  taskList.removeChild(selectedTask);
 }
 
 addButton.addEventListener('click', (event) => addItem(taskInput.value, event));
