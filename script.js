@@ -1,4 +1,5 @@
-const clearButton = document.getElementById('apaga-tudo');
+const clearAllButton = document.getElementById('apaga-tudo');
+const clearCompletedButton = document.getElementById('remover-finalizados');
 const addButton = document.getElementById('criar-tarefa');
 const taskInput = document.getElementById('texto-tarefa');
 const taskList = document.getElementById('lista-tarefas');
@@ -57,5 +58,14 @@ function clearList() {
   }
 }
 
+function clearCompleted() {
+  const completedTasks = document.getElementsByClassName('completed');
+  for (let index = completedTasks.length - 1; index >= 0; index -= 1) {
+    const item = completedTasks[index];
+    taskList.removeChild(item);
+  }
+}
+
 addButton.addEventListener('click', addItem);
-clearButton.addEventListener('click', clearList);
+clearAllButton.addEventListener('click', clearList);
+clearCompletedButton.addEventListener('click', clearCompleted);
