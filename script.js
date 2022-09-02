@@ -26,12 +26,18 @@ function completeElementBuilder(element, text, parent, idName) {
 
 function selectItem(event) {
   const clickedItem = event.target;
+  const listItems = document.getElementsByClassName('task-item');
+  for (let index = 0; index < listItems.length; index += 1) {
+    const item = listItems[index];
+    item.classList.remove('selected');
+  }
   clickedItem.classList.add('selected');
 }
 
 function addItem() {
   const taskText = taskInput.value;
-  const taskItem = completeElementBuilder('li', taskText, taskList, 'task-item');
+  const taskItem = completeElementBuilder('li', taskText, taskList);
+  taskItem.classList.add('task-item');
   taskItem.addEventListener('click', selectItem);
   taskInput.value = '';
 }
