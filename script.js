@@ -34,11 +34,17 @@ function selectItem(event) {
   clickedItem.classList.add('selected');
 }
 
+function completeTask(event) {
+  const completedItem = event.target;
+  completedItem.classList.toggle('completed');
+}
+
 function addItem() {
   const taskText = taskInput.value;
   const taskItem = completeElementBuilder('li', taskText, taskList);
   taskItem.classList.add('task-item');
   taskItem.addEventListener('click', selectItem);
+  taskItem.addEventListener('dblclick', completeTask);
   taskInput.value = '';
 }
 
