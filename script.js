@@ -1,5 +1,6 @@
-const clearAllButton = document.getElementById('apaga-tudo');
 const clearCompletedButton = document.getElementById('remover-finalizados');
+const clearAllButton = document.getElementById('apaga-tudo');
+const saveButton = document.getElementById('salvar-tarefas');
 const addButton = document.getElementById('criar-tarefa');
 const taskInput = document.getElementById('texto-tarefa');
 const taskList = document.getElementById('lista-tarefas');
@@ -50,22 +51,28 @@ function addItem() {
   taskInput.value = '';
 }
 
-function clearList() {
-  const listItems = document.getElementsByClassName('task-item');
+function removeListItems(listItems) {
   for (let index = listItems.length - 1; index >= 0; index -= 1) {
     const item = listItems[index];
     taskList.removeChild(item);
   }
 }
 
+function clearList() {
+  const listItems = document.getElementsByClassName('task-item');
+  removeListItems(listItems);
+}
+
 function clearCompleted() {
   const completedTasks = document.getElementsByClassName('completed');
-  for (let index = completedTasks.length - 1; index >= 0; index -= 1) {
-    const item = completedTasks[index];
-    taskList.removeChild(item);
-  }
+  removeListItems(completedTasks);
+}
+
+function saveList() {
+  // code
 }
 
 addButton.addEventListener('click', addItem);
 clearAllButton.addEventListener('click', clearList);
 clearCompletedButton.addEventListener('click', clearCompleted);
+saveButton.addEventListener('click', saveList);
