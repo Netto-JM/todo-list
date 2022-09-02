@@ -42,13 +42,13 @@ function completeTask(event) {
   completedItem.classList.toggle('completed');
 }
 
-function addItem() {
-  const taskText = taskInput.value;
+function addItem(taskText, event) {
   const taskItem = completeElementBuilder('li', taskText, taskList);
   taskItem.classList.add('task-item');
   taskItem.addEventListener('click', selectItem);
   taskItem.addEventListener('dblclick', completeTask);
-  taskInput.value = '';
+  if (event.type === 'click') taskInput.value = '';
+  return taskItem;
 }
 
 function removeListItems(listItems) {
@@ -63,16 +63,40 @@ function clearList() {
   removeListItems(listItems);
 }
 
+function saveList() {
+  const taskDescriptions = [];
+  const taskClasses = [];
+  const listItems = document.getElementsByClassName('task-item');
+  for (let index = 0; index < listItems.length; index += 1) {
+    const item = listItems[index];
+    const description = item.textContent;
+    taskDescriptions.push(description);
+    const classes = item.classList.toString();
+    taskClasses.push(classes);
+  }
+  localStorage.setItem('taskDescriptions', JSON.stringify(taskDescriptions));
+  localStorage.setItem('taskClasses', JSON.stringify(taskClasses));
+}
+
 function clearCompleted() {
   const completedTasks = document.getElementsByClassName('completed');
   removeListItems(completedTasks);
 }
 
-function saveList() {
-  // code
+function getList(event) {
+  const taskDescriptions = JSON.parse(localStorage.getItem('taskDescriptions'));
+  if (taskDescriptions === null || taskDescriptions.length === 0) return undefined;
+  const taskClasses = JSON.parse(localStorage.getItem('taskClasses'));
+  for (let index = 0; index < taskDescriptions.length; index += 1) {
+    const description = taskDescriptions[index];
+    const taskItem = addItem(description, event);
+    const remainingClasses = taskClasses[index].split(' ').slice(1);
+    taskItem.classList.add(...remainingClasses);
+  }
 }
 
-addButton.addEventListener('click', addItem);
+addButton.addEventListener('click', (event) => addItem(taskInput.value, event));
 clearAllButton.addEventListener('click', clearList);
 clearCompletedButton.addEventListener('click', clearCompleted);
 saveButton.addEventListener('click', saveList);
+window.addEventListener('load', getList);
