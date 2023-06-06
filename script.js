@@ -88,7 +88,7 @@ function clearCompleted() {
 
 function getList(event) {
   const taskDescriptions = JSON.parse(localStorage.getItem('taskDescriptions'));
-  if (taskDescriptions === null || taskDescriptions.length === 0) return undefined;
+  if (taskDescriptions === null || taskDescriptions.length === 0) return;
   const taskClasses = JSON.parse(localStorage.getItem('taskClasses'));
   for (let index = 0; index < taskDescriptions.length; index += 1) {
     const description = taskDescriptions[index];
@@ -105,7 +105,7 @@ function isNothingSelected(selectedTask) {
 
 function moveTaskUp() {
   const selectedTask = document.querySelector('.selected');
-  if (isNothingSelected(selectedTask)) return undefined;
+  if (isNothingSelected(selectedTask)) return;
   const previousTask = selectedTask.previousElementSibling;
   const isTopTask = !previousTask;
   if (isTopTask) return alert('Task is already at the top');
@@ -114,7 +114,7 @@ function moveTaskUp() {
 
 function moveTaskDown() {
   const selectedTask = document.querySelector('.selected');
-  if (isNothingSelected(selectedTask)) return undefined;
+  if (isNothingSelected(selectedTask)) return;
   const nextTask = selectedTask.nextElementSibling;
   const isBottomTask = !nextTask;
   if (isBottomTask) return alert('Task is already at the bottom');
@@ -123,7 +123,7 @@ function moveTaskDown() {
 
 function removeSelectedTask() {
   const selectedTask = document.querySelector('.selected');
-  if (isNothingSelected(selectedTask)) return undefined;
+  if (isNothingSelected(selectedTask)) return;
   taskList.removeChild(selectedTask);
 }
 
